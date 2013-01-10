@@ -25,13 +25,12 @@ module Harvest
           params[:method] = method
 
           response = HTTParty.send(method, "#{credentials.host}#{path}",
-            :query => options[:query],
+            :query => {:access_token => credentials.access_token}.merge(options[:query]),
             :body => options[:body],
             :format => :plain,
             :headers => {
               "Accept" => "application/json",
               "Content-Type" => "application/json; charset=utf-8",
-              "Authorization" => "Basic #{credentials.basic_auth}",
               "User-Agent" => "Harvestable/#{Harvest::VERSION}",
             }.update(options[:headers] || {})
           )

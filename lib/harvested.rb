@@ -35,8 +35,8 @@ module Harvest
     #   Harvest.client('mysubdomain', 'myusername', 'mypassword', :ssl => false)
     #
     # @return [Harvest::Base]
-    def client(subdomain, username, password, options = {})
-      Harvest::Base.new(subdomain, username, password, options)
+    def client(access_token, options = {})
+      Harvest::Base.new(access_token, options)
     end
 
     # Creates a hardy client that will retry common HTTP errors it encounters and sleep() if it determines it is over your rate limit

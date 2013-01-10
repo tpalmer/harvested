@@ -1,21 +1,17 @@
 module Harvest
   class Credentials
-    attr_accessor :subdomain, :username, :password, :ssl
-    
-    def initialize(subdomain, username, password, ssl = true)
-      @subdomain, @username, @password, @ssl = subdomain, username, password, ssl
+    attr_accessor :access_token, :ssl
+
+    def initialize(access_token, ssl = true)
+      @access_token, @ssl = access_token, ssl
     end
-    
+
     def valid?
-      !subdomain.nil? && !username.nil? && !password.nil?
+      !access_token.nil?
     end
-    
-    def basic_auth
-      Base64.encode64("#{username}:#{password}").delete("\r\n")
-    end
-    
+
     def host
-      "#{ssl ? "https" : "http"}://#{subdomain}.harvestapp.com"
+      "#{ssl ? "https" : "http"}://api.harvestapp.com"
     end
   end
 end

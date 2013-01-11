@@ -24,15 +24,24 @@ module Harvest
           params[:options] = options
           params[:method] = method
 
+          query = {}
+          headers = {
+            "Accept" => "application/json",
+            "Content-Type" => "application/json; charset=utf-8",
+            "User-Agent" => "Harvestable/#{Harvest::VERSION}",
+          }
+          if credentials.access_token
+            query = options[:query].merge({:access_token => credentials.access_token})
+          else
+            query = options[:query]
+            headers.merge!("Authorization" => "Basic #{credentials.basic_auth}")
+          end
+
           response = HTTParty.send(method, "#{credentials.host}#{path}",
-            :query => {:access_token => credentials.access_token}.merge(options[:query]),
+            :query => query,
             :body => options[:body],
             :format => :plain,
-            :headers => {
-              "Accept" => "application/json",
-              "Content-Type" => "application/json; charset=utf-8",
-              "User-Agent" => "Harvestable/#{Harvest::VERSION}",
-            }.update(options[:headers] || {})
+            :headers => headers.update(options[:headers] || {})
           )
 
           params[:response] = response.inspect.to_s

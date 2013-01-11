@@ -44,6 +44,12 @@ harvest = Harvest.hardy_client('yoursubdomain', 'yourusername', 'yourpassword')
 harvest.projects.all   # This will wait for the Rate Limit reset if you have gone over your limit
 ```
 
+## OAUTH Client
+
+```ruby
+harvest = Harvest.oauth_client 'api', ENV['ACCESS_TOKEN'], {:ssl => true}
+```
+
 ## Ruby support
 
 Harvested's tests are currently passing for 1.8.7, 1.9.2, JRuby 1.6.2, and Rubinius

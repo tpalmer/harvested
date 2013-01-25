@@ -31,6 +31,7 @@ module Harvest
             "User-Agent" => "Harvestable/#{Harvest::VERSION}",
           }
           if credentials.access_token
+            options[:query] = {} if options[:query].nil?
             query = options[:query].merge({:access_token => credentials.access_token})
           else
             query = options[:query]

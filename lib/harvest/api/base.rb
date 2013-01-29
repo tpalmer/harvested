@@ -31,7 +31,11 @@ module Harvest
             "User-Agent" => "Harvestable/#{Harvest::VERSION}",
           }
           if credentials.access_token
-            query = options[:query].merge({:access_token => credentials.access_token})
+            if options[:query]
+              query = options[:query].merge({:access_token => credentials.access_token})
+            else
+              query = {:access_token => credentials.access_token}
+            end
           else
             query = options[:query]
             headers.merge!("Authorization" => "Basic #{credentials.basic_auth}")
